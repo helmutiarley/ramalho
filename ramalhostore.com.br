@@ -1,0 +1,10 @@
+server {
+    listen 80;
+    server_name ramalhostore.com.br;
+
+    location / {
+        root /home/react-projects/ramalho/ramalho/dist;
+        index index.html;
+        try_files $uri $uri/ /index.html;
+    }
+}
