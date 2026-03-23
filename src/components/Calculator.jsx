@@ -123,7 +123,7 @@ export function Calculator() {
                 <span className="block">está aqui.</span>
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                iPhone, MacBook, iPad e Apple Watch com atendimento direto e compra sem complicação.
+                MacBook, iPad e Apple Watch com atendimento direto e compra sem complicação.
               </p>
             </motion.div>
 
