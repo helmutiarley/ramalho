@@ -1,7 +1,31 @@
 
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = 'https://esupbxqznxgcicgbhmyt.supabase.co'
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVzdXBieHF6bnhnY2ljZ2JobXl0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0MjU3Mjc2OCwiZXhwIjoyMDU4MTQ4NzY4fQ.TbkQeHZxmpp6CHfS6Ty_VwToBK9UTPwCfUHRHfRHs2k'
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+
+if (!supabaseUrl || !supabaseKey) {
+  throw new Error(
+    'Supabase env vars ausentes. Defina VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY no arquivo .env.'
+  )
+}
+
+try {
+  const payload = JSON.parse(atob(supabaseKey.split('.')[1]))
+
+  if (payload.role === 'service_role') {
+    throw new Error(
+      'Nao use a service_role no frontend. Troque VITE_SUPABASE_ANON_KEY pela anon key publica do Supabase.'
+    )
+  }
+} catch (error) {
+  if (error instanceof SyntaxError) {
+    throw new Error('VITE_SUPABASE_ANON_KEY esta em um formato invalido.')
+  }
+
+  if (error instanceof Error) {
+    throw error
+  }
+}
 
 export const supabase = createClient(supabaseUrl, supabaseKey)
